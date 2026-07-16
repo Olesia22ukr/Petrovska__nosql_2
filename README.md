@@ -2,39 +2,68 @@
 
 ## Comprehensive Survey on Vector Database
 
-NoSQL & Vector Databases course.
+Course: NoSQL & Vector Databases
 
-## Project includes:
+Author: Olesia Petrovska
 
-- arXiv dataset processing
-- SPECTER2 embeddings
-- Pinecone vector database
-- Semantic search
+---
 
-## Реалізація
+# Project Overview
 
-У проєкті виконано:
+This project demonstrates the implementation of a semantic search system using vector databases.
 
-- завантаження та підготовку набору даних arXiv;
-- створення embeddings (векторних представлень тексту);
-- збереження векторів у Pinecone;
-- виконання semantic search за допомогою cosine similarity;
-- перевірку пошуку за різними текстовими запитами.
+The project includes:
 
-## Приклади запитів
+- arXiv dataset processing;
+- text embeddings generation using SPECTER2 model;
+- vector storage in Pinecone;
+- semantic search using cosine similarity;
+- keyword search;
+- hybrid search using vector search and BM25;
+- chunking strategies comparison.
 
-Приклади виконаних пошукових запитів:
+---
 
-- machine learning neural networks
-- artificial intelligence machine learning
-- computer vision deep learning
+# Part 1. Dataset Processing and Model Selection
 
-## Висновок
+## Dataset
 
-Векторна база даних дозволяє знаходити документи за змістом, а не лише за точним збігом ключових слів.
+The project uses the arXiv dataset containing scientific paper abstracts.
 
-Semantic search показав, що embeddings дозволяють знаходити тексти зі схожим значенням навіть тоді, коли слова у запиті та документах відрізняються.
+The dataset was selected because scientific documents require semantic understanding rather than simple keyword matching.
 
-## Author
+## Embedding Model Selection
 
-Olesia Petrovska
+SPECTER2 embeddings model was chosen because it is designed for scientific papers and captures relationships between research documents.
+
+The model converts text documents into numerical vectors that represent their semantic meaning.
+
+## Vector Database Selection
+
+Pinecone was selected as the vector database because:
+
+- it provides fast similarity search;
+- it supports large-scale vector storage;
+- it allows metadata storage together with vectors;
+- it is optimized for Retrieval-Augmented Generation (RAG) systems.
+
+---
+
+# Part 2. Vector Database Index Creation
+
+## Index Configuration
+
+The Pinecone index was created with the following parameters:
+
+- Dimension: 384
+- Metric: cosine similarity
+- Total vectors uploaded: 1000
+
+## Metadata
+
+Each stored vector contains metadata:
+
+```text
+{
+"text": original document text
+}
