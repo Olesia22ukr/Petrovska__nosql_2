@@ -1,6 +1,6 @@
 # Vector Database Homework
 
-## A Comprehensive Survey on Vector Database
+## Comprehensive Survey on Vector Database
 
 NoSQL & Vector Databases course.
 
