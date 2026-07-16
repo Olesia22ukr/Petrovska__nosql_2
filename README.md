@@ -67,3 +67,88 @@ Each stored vector contains metadata:
 {
 "text": original document text
 }
+# Part 3. Search Methods
+
+Implemented search methods:
+
+## 1. Semantic Search
+
+Description:
+...
+
+Example queries:
+
+| Query | Result |
+|---|---|
+| machine learning neural networks | ... |
+
+## 2. Keyword Search (BM25)
+
+Description:
+...
+
+## 3. Hybrid Search
+
+Description:
+Combines BM25 and vector similarity.
+
+Results were compared using three queries.
+
+# Part 4. Chunking Strategies
+
+Two approaches were tested:
+
+## Strategy 1: Fixed-size chunks
+
+Description...
+
+## Strategy 2: Semantic chunks
+
+Description...
+
+Comparison:
+
+| Method | Advantages | Disadvantages |
+|---|---|---|
+| Fixed | simple | may split meaning |
+| Semantic | better context | more complex |
+
+# Part 5. Hybrid Search and RRF
+
+Hybrid search combines:
+
+- BM25 keyword relevance
+- vector semantic similarity
+
+
+## Comparison
+
+| Query | BM25 | Vector Search | Hybrid Search |
+|---|---|---|---|
+| machine learning neural networks | ... | ... | ... |
+| artificial intelligence machine learning | ... | ... | ... |
+| computer vision deep learning | ... | ... | ... |
+
+# Part 6. Analysis and Conclusions
+
+Vector search advantages:
+
+- understands semantic meaning;
+- finds related concepts.
+
+BM25 advantages:
+
+- works well with exact keywords.
+
+Hybrid search:
+
+- combines both approaches;
+- improves retrieval quality.
+
+Cosine similarity measures the angle between vectors.
+Higher similarity means closer semantic meaning.
+
+Main trade-off:
+
+Vector search provides better semantic understanding,
+while keyword search provides better exact matching.
