@@ -2,9 +2,8 @@
 
 ## Comprehensive Survey on Vector Database
 
-Course: NoSQL & Vector Databases
-
-Author: Olesia Petrovska
+**Course:** NoSQL & Vector Databases  
+**Author:** Olesia Petrovska
 
 ---
 
@@ -12,15 +11,21 @@ Author: Olesia Petrovska
 
 This project demonstrates the implementation of a semantic search system using vector databases.
 
-The project includes:
+The goal of the project is to compare different search approaches for scientific documents:
 
-- arXiv dataset processing;
+- semantic vector search;
+- keyword-based search;
+- hybrid search combining both approaches.
+
+The project uses the arXiv scientific papers dataset and includes:
+
+- dataset processing;
 - text embeddings generation using SPECTER2 model;
 - vector storage in Pinecone;
 - semantic search using cosine similarity;
-- keyword search;
-- hybrid search using vector search and BM25;
-- chunking strategies comparison.
+- keyword search using BM25;
+- hybrid search using Reciprocal Rank Fusion (RRF);
+- comparison of chunking strategies.
 
 ---
 
@@ -28,127 +33,240 @@ The project includes:
 
 ## Dataset
 
-The project uses the arXiv dataset containing scientific paper abstracts.
+The project uses the **arXiv dataset** containing scientific paper abstracts.
 
-The dataset was selected because scientific documents require semantic understanding rather than simple keyword matching.
+Scientific documents were selected because they require semantic understanding. Simple keyword matching is often insufficient because related concepts may be described using different words.
 
 ## Embedding Model Selection
 
-SPECTER2 embeddings model was chosen because it is designed for scientific papers and captures relationships between research documents.
+The **SPECTER2 embedding model** was selected because it is designed specifically for scientific documents.
 
-The model converts text documents into numerical vectors that represent their semantic meaning.
+The model converts text documents into numerical vectors that represent semantic meaning and relationships between research papers.
+
+Generated embeddings have:
+
+- dimension: **384**
+- total generated vectors: **1000**
 
 ## Vector Database Selection
 
-Pinecone was selected as the vector database because:
+**Pinecone** was selected as the vector database.
 
-- it provides fast similarity search;
-- it supports large-scale vector storage;
-- it allows metadata storage together with vectors;
-- it is optimized for Retrieval-Augmented Generation (RAG) systems.
+Reasons:
+
+- fast similarity search;
+- scalable vector storage;
+- metadata support;
+- suitable for Retrieval-Augmented Generation (RAG) systems.
 
 ---
 
 # Part 2. Vector Database Index Creation
 
-## Index Configuration
+## Pinecone Index Configuration
 
-The Pinecone index was created with the following parameters:
+The vector index was created with the following parameters:
 
-- Dimension: 384
-- Metric: cosine similarity
-- Total vectors uploaded: 1000
+| Parameter | Value |
+|---|---|
+| Index name | arxiv-search |
+| Dimension | 384 |
+| Similarity metric | cosine |
+| Stored vectors | 1000 |
 
-## Metadata
+## Metadata Storage
 
-Each stored vector contains metadata:
+Each vector contains metadata with the original document text:
 
 ```text
 {
 "text": original document text
 }
+```
+
+Vectors were uploaded to Pinecone using batch upload.
+
+---
+
 # Part 3. Search Methods
 
-Implemented search methods:
+Three search approaches were implemented and compared.
 
-## 1. Semantic Search
+---
 
-Description:
-...
+## 1. Semantic Vector Search
 
-Example queries:
+Semantic search uses embeddings and cosine similarity.
 
-| Query | Result |
-|---|---|
-| machine learning neural networks | ... |
+Instead of looking only for exact words, it searches for documents with similar meaning.
+
+Example query:
+
+```
+machine learning neural networks
+```
+
+Results are ranked by vector similarity score.
+
+---
 
 ## 2. Keyword Search (BM25)
 
-Description:
-...
+BM25 is a traditional keyword-based ranking algorithm.
+
+It searches documents based on word occurrence and relevance.
+
+Advantages:
+
+- good for exact keyword matching;
+- simple and fast.
+
+Example:
+
+```
+computer vision deep learning
+```
+
+---
 
 ## 3. Hybrid Search
 
-Description:
-Combines BM25 and vector similarity.
+Hybrid search combines:
 
-Results were compared using three queries.
+- vector similarity search;
+- BM25 keyword ranking.
+
+The final ranking is created using:
+
+**Reciprocal Rank Fusion (RRF)**
+
+This approach combines semantic understanding with exact keyword matching.
+
+---
 
 # Part 4. Chunking Strategies
 
-Two approaches were tested:
+Two chunking approaches were tested.
 
-## Strategy 1: Fixed-size chunks
+## Fixed-size Chunking
 
-Description...
+Documents were divided into equal-size text blocks.
 
-## Strategy 2: Semantic chunks
+Advantages:
 
-Description...
+- simple implementation;
+- predictable chunk size.
 
-Comparison:
+Disadvantages:
+
+- may split important context.
+
+Example result:
+
+```
+Fixed chunks: 5771
+```
+
+---
+
+## Overlapping Semantic Chunking
+
+Chunks were created with overlap between text segments.
+
+Advantages:
+
+- preserves more context;
+- reduces information loss.
+
+Example result:
+
+```
+Semantic chunks: 6828
+```
+
+---
+
+## Chunking Comparison
 
 | Method | Advantages | Disadvantages |
 |---|---|---|
-| Fixed | simple | may split meaning |
-| Semantic | better context | more complex |
+| Fixed chunks | Simple and fast | Can split meaning |
+| Semantic chunks | Better context preservation | More complex |
 
-# Part 5. Hybrid Search and RRF
+---
 
-Hybrid search combines:
+# Part 5. Search Results Comparison
 
-- BM25 keyword relevance
-- vector semantic similarity
+Three queries were tested:
 
+| Query |
+|---|
+| machine learning neural networks |
+| artificial intelligence machine learning |
+| computer vision deep learning |
 
-## Comparison
+Search methods compared:
 
-| Query | BM25 | Vector Search | Hybrid Search |
-|---|---|---|---|
-| machine learning neural networks | ... | ... | ... |
-| artificial intelligence machine learning | ... | ... | ... |
-| computer vision deep learning | ... | ... | ... |
+- Vector Search
+- BM25 Search
+- Hybrid Search
 
-# Part 6. Analysis and Conclusions
+Hybrid search combines advantages of both approaches:
 
-Vector search advantages:
+- semantic similarity from embeddings;
+- keyword relevance from BM25.
+
+---
+
+# Part 6. Results Screenshots
+
+The project execution results are provided in:
+
+```
+results_screenshots/
+```
+
+Included screenshots:
+
+- dataset processing;
+- embeddings generation;
+- Pinecone index creation;
+- vector search results;
+- BM25 search results;
+- hybrid search results;
+- chunking comparison.
+
+---
+
+# Part 7. Analysis and Conclusions
+
+## Vector Search
+
+Advantages:
 
 - understands semantic meaning;
-- finds related concepts.
+- finds conceptually related documents;
+- works even when exact keywords are missing.
 
-BM25 advantages:
+## BM25 Search
 
-- works well with exact keywords.
+Advantages:
 
-Hybrid search:
+- effective for exact keyword matching;
+- simple and interpretable.
 
-- combines both approaches;
-- improves retrieval quality.
+## Hybrid Search
 
-Cosine similarity measures the angle between vectors.
-Higher similarity means closer semantic meaning.
+Advantages:
 
-Main trade-off:
+- combines semantic and keyword approaches;
+- improves retrieval quality;
+- provides more balanced results.
 
-Vector search provides better semantic understanding,
-while keyword search provides better exact matching.
+## Final Conclusion
+
+Vector search provides better semantic understanding, while BM25 provides stronger exact keyword matching.
+
+The hybrid approach combines both methods and provides the most flexible search strategy for scientific documents.
+
+The project demonstrates how vector databases can be used for semantic retrieval and Retrieval-Augmented Generation (RAG) systems.
